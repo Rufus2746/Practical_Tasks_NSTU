@@ -22,7 +22,7 @@ bool input(tree *t)
 
    return true;
 }
-
+//úóú
 int main()
 {
    tree *t = new tree();
