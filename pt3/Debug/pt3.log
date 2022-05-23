@@ -1,0 +1,5 @@
+﻿  tree.cpp
+Z:\brigade7\pt3\tree.cpp(25,7): error C2360: пропуск инициализации "next" из-за метки "case"
+Z:\brigade7\pt3\tree.cpp(18): message : см. объявление "next"
+Z:\brigade7\pt3\tree.cpp(29,7): error C2361: пропуск инициализации "next" из-за метки "default"
+Z:\brigade7\pt3\tree.cpp(18): message : см. объявление "next"
