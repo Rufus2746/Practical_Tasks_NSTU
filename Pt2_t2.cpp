@@ -13,7 +13,7 @@ enum command
    PostOrderRec,
    Exit
 };
-//need to be fixed
+//need to be fixed.
 void preorder_rec(tree *&node, char find, char cmd)
 {
    if (node == NULL)
