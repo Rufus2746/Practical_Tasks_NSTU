@@ -132,10 +132,10 @@ void tree::postorder(char find)
          {
             if (current->elem != find)
             {
-            printf("%c -> ", current->elem);
-            s->pop(&current);
-            previous = current;
-            current = NULL;
+               printf("%c -> ", current->elem);
+               s->pop(&current);
+               previous = current;
+               current = NULL;
             }
             else
             {
@@ -148,3 +148,29 @@ void tree::postorder(char find)
       }
    }
 }
+
+bool tree::preorder_rec(char find)
+{
+   printf((elem == find) ? "%c" : "%c -> ", elem);
+   return (elem == find || left != NULL && left->preorder_rec(find) || right != NULL && right->preorder_rec(find)) ? true : false;
+};
+
+bool tree::inorder_rec(char t)
+{
+   if (left != NULL && left->inorder_rec(t))
+      return true;
+
+   printf((elem == t) ? "%c" : "%c -> ", elem);
+
+   return (elem == t) ? true : right != NULL && right->inorder_rec(t);
+};
+
+bool tree::postorder_rec(char t)
+{
+   if (left != NULL && left->postorder_rec(t) || right != NULL && right->postorder_rec(t))
+      return true;
+
+   printf((elem == t) ? "%c" : "%c -> ", elem);
+
+   return elem == t;
+};

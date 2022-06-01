@@ -14,88 +14,13 @@ enum command
    Exit
 };
 
-void preorder_rec(tree *&node, char find, bool *completed)
-{
-   if (node == NULL)
-      return;
-   if (node->elem != find)
-   {
-      if (!*completed)
-         printf("%c -> ", node->elem);
-      if (!*completed)
-         preorder_rec(node->left, find, completed);
-      if (!*completed)
-         preorder_rec(node->right, find, completed);
-   }
-   else
-   {
-      printf("%c", node->elem);
-      *completed = true;
-   }
-};
-
-void inorder_rec(tree *&node, char find, bool *completed)
-{
-   if (node == NULL)
-      return ;
-   if (node->elem != find)
-   {
-      if (!*completed)
-         inorder_rec(node->left, find, completed);
-      if (!*completed)
-         printf("%c -> ", node->elem);
-      if (!*completed)
-         inorder_rec(node->right, find, completed);
-   }
-   else
-   {
-      *completed = true;
-      printf("%c", node->elem);
-   }
-};
-
-void postorder_rec(tree *&node, char find, bool *completed)
-{
-   if (node == NULL)
-      return;
-   if (node->elem != find)
-   {
-      if (!*completed)
-         postorder_rec(node->left, find, completed);
-      if (!*completed)
-         postorder_rec(node->right, find, completed);
-      if (!*completed)
-         printf("%c -> ", node->elem);
-   }
-   else
-   {
-      *completed = true;
-      printf("%c", node->elem);
-   }
-};
-
-
-void math(int *_a, int *_b)
-{
-   *_a = 20;
-   *_b = 30;
-}
-
-
-
 int main()
 {
    setlocale(LC_ALL, "");
    tree *t = new tree();
-   FILE *f{};
+   FILE *f = NULL;
    t->input(f);
-   char cmd = '\0', elem = '\0', tmp = '\0';
-   bool completed = false;
-
-   int a = 10, b = 15;
-
-   math(&a, &b);
-   printf("%d, %d\n", a, b);
+   char cmd = '\0', elem = '\0';
 
    printf("¬ведите искомый элемент дерева:\n");
    scanf_s("%c", &elem, sizeof(char));
@@ -118,16 +43,13 @@ int main()
             t->postorder(elem);
             break;
          case PreOrderRec:
-            completed = false;
-            preorder_rec(t, elem, &completed);
+            t->preorder_rec(elem);
             break;
          case InOrderRec:
-            completed = false;
-            inorder_rec(t, elem, &completed);
+            t->inorder_rec(elem);
             break;
          case PostOrderRec:
-            completed = false;
-            postorder_rec(t, elem, &completed);
+            t->postorder_rec(elem);
             break;
          case Exit:
             cmd = cmd - '0';

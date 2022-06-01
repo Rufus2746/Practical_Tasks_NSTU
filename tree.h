@@ -14,6 +14,9 @@ struct tree
    void inorder(char find);
    void preorder(char find);
    void postorder(char find);
+   bool preorder_rec(char find);
+   bool inorder_rec(char find);
+   bool postorder_rec(char find);
 };
 
 #endif TREE_H
