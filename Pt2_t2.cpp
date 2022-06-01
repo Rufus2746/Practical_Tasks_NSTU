@@ -13,49 +13,74 @@ enum command
    PostOrderRec,
    Exit
 };
-//need to be fixed.
-void preorder_rec(tree *&node, char find, char cmd)
+
+void preorder_rec(tree *&node, char find, bool *completed)
 {
    if (node == NULL)
       return;
    if (node->elem != find)
    {
-      printf("%c -> ", node->elem);
-      if (!cmd)
-         preorder_rec(node->left, find, cmd);
-      if (!cmd)
-         preorder_rec(node->right, find, cmd);
+      if (!*completed)
+         printf("%c -> ", node->elem);
+      if (!*completed)
+         preorder_rec(node->left, find, completed);
+      if (!*completed)
+         preorder_rec(node->right, find, completed);
    }
-   else cmd = true;
-};
-
-void inorder_rec(tree *&node, char find, char tmp)
-{
-   bool completed = false;
-   if (node == NULL)
-      return;
-   if (tmp != find)
+   else
    {
-      inorder_rec(node->left, find, tmp);
-      tmp = node->elem;
       printf("%c", node->elem);
-      inorder_rec(node->right, find, tmp);
+      *completed = true;
    }
 };
 
-void postorder_rec(tree *&node, char find, char tmp)
+void inorder_rec(tree *&node, char find, bool *completed)
 {
-   bool completed = false;
    if (node == NULL)
-      return;
-   if (tmp != find)
+      return ;
+   if (node->elem != find)
    {
-      postorder_rec(node->left, find, tmp);
-      postorder_rec(node->right, find, tmp);
-      tmp = node->elem;
+      if (!*completed)
+         inorder_rec(node->left, find, completed);
+      if (!*completed)
+         printf("%c -> ", node->elem);
+      if (!*completed)
+         inorder_rec(node->right, find, completed);
+   }
+   else
+   {
+      *completed = true;
       printf("%c", node->elem);
    }
 };
+
+void postorder_rec(tree *&node, char find, bool *completed)
+{
+   if (node == NULL)
+      return;
+   if (node->elem != find)
+   {
+      if (!*completed)
+         postorder_rec(node->left, find, completed);
+      if (!*completed)
+         postorder_rec(node->right, find, completed);
+      if (!*completed)
+         printf("%c -> ", node->elem);
+   }
+   else
+   {
+      *completed = true;
+      printf("%c", node->elem);
+   }
+};
+
+
+void math(int *_a, int *_b)
+{
+   *_a = 20;
+   *_b = 30;
+}
+
 
 
 int main()
@@ -65,14 +90,19 @@ int main()
    FILE *f{};
    t->input(f);
    char cmd = '\0', elem = '\0', tmp = '\0';
-   bool cmd = false;
+   bool completed = false;
+
+   int a = 10, b = 15;
+
+   math(&a, &b);
+   printf("%d, %d\n", a, b);
 
    printf("Введите искомый элемент дерева:\n");
    scanf_s("%c", &elem, sizeof(char));
-   printf_s("Выберете метод поиска элемента:\n\n %d - Прямой\n %d - Обратный\n %d - Концевой\n %d - Прямой рекурсивный\n %d - Обратный рекурсивный\n %d - Концевой рекурсивный\n %d - Выход из программы\n\n", PreOrder, InOrder, PostOrder, PreOrderRec, InOrderRec, PostOrderRec, Exit);
-   bool repeatFlag = true;
    do
    {
+      printf_s("Выберете метод поиска элемента:\n\n %d - Прямой\n %d - Обратный\n %d - Концевой\n %d - Прямой рекурсивный\n %d - Обратный рекурсивный\n %d - Концевой рекурсивный\n %d - Выход из программы\n\n", PreOrder, InOrder, PostOrder, PreOrderRec, InOrderRec, PostOrderRec, Exit);
+      bool repeatFlag = true;
       do
       {
          scanf_s("\n%c", &cmd, 1);
@@ -88,13 +118,16 @@ int main()
             t->postorder(elem);
             break;
          case PreOrderRec:
-            preorder_rec(t, elem, cmd);
+            completed = false;
+            preorder_rec(t, elem, &completed);
             break;
          case InOrderRec:
-            inorder_rec(t, elem, tmp);
+            completed = false;
+            inorder_rec(t, elem, &completed);
             break;
          case PostOrderRec:
-            postorder_rec(t, elem, tmp);
+            completed = false;
+            postorder_rec(t, elem, &completed);
             break;
          case Exit:
             cmd = cmd - '0';
